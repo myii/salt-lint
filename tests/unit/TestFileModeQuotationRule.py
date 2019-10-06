@@ -16,6 +16,8 @@ testfile:
     - user: root
     - group: root
     - mode: '0700'
+    - file_mode: 660
+    - dir_mode: 775
 '''
 
 BAD_MODE_QUOTATION_LINE = '''
