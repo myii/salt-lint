@@ -55,6 +55,11 @@ NESTED_LITERAL_BRACES = '''
     - name: '{${{ key }}}'
 '''
 
+FALSE_POSITIVE = '''
+    - content: |
+           DKIM_DOMAIN = ${lc:${domain:$h_from:}}
+'''
+
 class TestJinjaVariableHasSpaces(unittest.TestCase):
     collection = RulesCollection()
 
@@ -110,4 +115,8 @@ class TestJinjaVariableHasSpaces(unittest.TestCase):
         https://github.com/warpnet/salt-lint/issues/257
         """
         results = self.runner.run_state(NESTED_LITERAL_BRACES)
+        self.assertEqual(0, len(results))
+
+    def test_false_positive(self):
+        results = self.runner.run_state(FALSE_POSITIVE)
         self.assertEqual(0, len(results))
